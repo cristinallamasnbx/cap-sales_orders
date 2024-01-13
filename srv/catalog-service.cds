@@ -11,7 +11,7 @@ service CatalogServices {
         DeliveryDate,
         OrderStatus,
         ImageUrl,
-        Items
+        ToItems
     };
 
     @readonly
@@ -22,6 +22,17 @@ service CatalogServices {
         ReleaseDate,
         DiscontinuedDate,
         Price,
-        Header as ToHeader
+        Height,
+        Width,
+        Depth,
+        Quantity,
+        ToUnitOfMeasure,
+        ToHeader
+    };
+
+    @readonly
+    entity UnitOfMeasure as select from logali.UnitOfMeasure {
+        ID,
+        Description
     }
 }

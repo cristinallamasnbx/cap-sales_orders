@@ -12,10 +12,16 @@ entity Header : cuid, managed {
         Country      : String(30);
         CreatedOn    : Date;
         DeliveryDate : DateTime;
-        OrderStatus  : Integer;
+        OrderStatus  : Integer enum {
+            received   = 1;
+            processing = 2;
+            shipped    = 3;
+            delivered  = 4;
+            canceled   = -1;
+        };
         ImageUrl     : String;
-        Items        : Association to many Item
-                           on Items.Header = $self;
+        ToItems      : Association to many HeaderxItem
+                           on ToItems.Header = $self;
 }
 
 entity Item : cuid, managed {
@@ -24,5 +30,27 @@ entity Item : cuid, managed {
     ReleaseDate      : Date;
     DiscontinuedDate : Date;
     Price            : Decimal(12, 2);
-    Header           : Association to Header;
+    Height           : Decimal(15, 3);
+    Width            : Decimal(13, 3);
+    Depth            : Decimal(12, 2);
+    Quantity         : Decimal(16, 2);
+    ToUnitOfMeasure  : Association to ItemxUnitOfMeasure
+                           on ToUnitOfMeasure.Item = $self;
+    ToHeader         : Association to many HeaderxItem
+                           on ToHeader.Item = $self;
+}
+
+entity UnitOfMeasure {
+    key ID          : String(2);
+        Description : String;
+}
+
+entity HeaderxItem : cuid {
+    Header : Association to Header;
+    Item   : Association to Item;
+}
+
+entity ItemxUnitOfMeasure: cuid {
+    Item          : Association to Item;
+    UnitOfMeasure : Association to UnitOfMeasure;
 }
