@@ -15,6 +15,13 @@ service CatalogServices {
     };
 
     @readonly
+    entity HeaderxItem as select from logali.HeaderxItem {
+        ID,
+        Header,
+        Item
+    };
+
+    @readonly
     entity Item as select from logali.Item {
         ID,
         Name,
@@ -34,5 +41,12 @@ service CatalogServices {
     entity UnitOfMeasure as select from logali.UnitOfMeasure {
         ID,
         Description
+    }
+
+    @readonly
+    entity ItemxUnitOfMeasure as select from logali.ItemxUnitOfMeasure {
+        ID,
+        Item,
+        UnitOfMeasure
     }
 }

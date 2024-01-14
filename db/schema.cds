@@ -45,12 +45,12 @@ entity UnitOfMeasure {
         Description : String;
 }
 
-entity HeaderxItem : cuid {
+entity HeaderxItem : cuid, managed {
     Header : Association to Header;
     Item   : Association to Item;
 }
 
-entity ItemxUnitOfMeasure: cuid {
+entity ItemxUnitOfMeasure: cuid, managed {
     Item          : Association to Item;
     UnitOfMeasure : Association to UnitOfMeasure;
 }

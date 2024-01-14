@@ -7,16 +7,16 @@ annotate service.Header with {
 
 annotate service.Header with @(
     // SemanticKey
-    Common.SemanticKey: [ID],
+    Common.SemanticKey    : [ID],
 
     // Filters
-    UI.SelectionFields: [
+    UI.SelectionFields    : [
         Email,
         LastName
     ],
 
     // Header
-    UI.HeaderInfo     : {
+    UI.HeaderInfo         : {
         $Type         : '',
         TypeName      : 'Sales Order',
         TypeNamePlural: 'Sales Orders',
@@ -35,11 +35,19 @@ annotate service.Header with @(
                 $Function: 'odata.concat'
             }}
         },
-        ImageUrl      : {$edmJson: {$Path: 'ImageUrl', }}
+        ImageUrl      : ImageUrl
+    },
+
+    // Table sort order
+    UI.PresentationVariant: {
+        SortOrder     : [
+                         //Default sort order
+                        {Property: CreatedOn}, ],
+        Visualizations: ['@UI.LineItem'],
     },
 
     // Table
-    UI.LineItem       : [
+    UI.LineItem           : [
         {
             $Type: 'UI.DataField',
             Value: CreatedOn,
@@ -73,17 +81,140 @@ annotate service.Header with @(
             Value: DeliveryDate,
             Label: 'Estimated delivery'
         },
-    ]
+    ],
 
+    // Facets
+    UI.FieldGroup #GroupA : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: FirstName,
+                Label: 'Name'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: LastName,
+                Label: 'Surname'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Email,
+                Label: 'Email'
+            }
+        ]
+    },
+    UI.FieldGroup #GroupB : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: ID,
+                Label: 'Sales Order ID'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: CreatedOn,
+                Label: 'Created on'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: OrderStatus,
+                Label: 'Status'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: DeliveryDate,
+                Label: 'Estimated delivery date'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Country,
+                Label: 'Country'
+            }
+        ]
+    },
+    UI.Facets             : [
+        /*{
+            $Type : 'UI.CollectionFacet',
+            Facets: [{
+                $Type : 'UI.ReferenceFacet',
+                Target: ![@UI.FieldGroup#GroupA],
+                Label : 'Sales Order Information'
+            }],
+        },*/
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Client information',
+            Target: ![@UI.FieldGroup#GroupA]
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Sales order information',
+            Target: ![@UI.FieldGroup#GroupB]
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Sales order items',
+            Target: 'ToItems/@UI.LineItem'
+        }
+    ]
 );
 
-annotate service.Item with @(
-    UI.HeaderInfo    : {
+annotate service.HeaderxItem with @(
+    UI.PresentationVariant: {
+        SortOrder     : [ //Default sort order
+        {
+            Property  : Item.Price,
+            Descending: true,
+        }, ],
+        Visualizations: ['@UI.LineItem'],
+    },
+    UI.HeaderInfo         : {
         $Type         : '',
         TypeName      : 'Item',
         TypeNamePlural: 'Items',
     },
-    UI.LineItem #Item: [
+    UI.LineItem           : [
+        {
+            $Type: 'UI.DataField',
+            Value: Item.Name
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: Item.Description
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: Item.Price
+        },
+        {
+            $Type: 'UI.DataField',
+            Value: Item.Quantity
+        } /*,
+         {
+             $Type: 'UI.DataField',
+             Value: Item.ToUnitOfMeasure.UnitOfMeasure.Description,
+             Label: 'Unit'
+         }*/
+    ]
+);
+
+annotate service.Item with @(
+    UI.PresentationVariant: {
+        SortOrder     : [ //Default sort order
+        {
+            Property  : Price,
+            Descending: true,
+        }, ],
+        Visualizations: ['@UI.LineItem'],
+    },
+    UI.HeaderInfo         : {
+        $Type         : '',
+        TypeName      : 'Item',
+        TypeNamePlural: 'Items',
+    },
+    UI.LineItem           : [
         {
             $Type: 'UI.DataField',
             Value: Name
