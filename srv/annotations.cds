@@ -178,25 +178,29 @@ annotate service.HeaderxItem with @(
     UI.LineItem           : [
         {
             $Type: 'UI.DataField',
-            Value: Item.Name
+            Value: Item.Name,
+            Label: 'Name'
         },
         {
             $Type: 'UI.DataField',
-            Value: Item.Description
+            Value: Item.Description,
+            Label: 'Description'
         },
         {
             $Type: 'UI.DataField',
-            Value: Item.Price
+            Value: Item.Price,
+            Label: 'Price'
         },
         {
             $Type: 'UI.DataField',
-            Value: Item.Quantity
-        } /*,
-         {
+            Value: Item.Quantity,
+            Label: 'Quantity'
+        } ,
+        {
              $Type: 'UI.DataField',
              Value: Item.ToUnitOfMeasure.UnitOfMeasure.Description,
              Label: 'Unit'
-         }*/
+        }
     ]
 );
 
