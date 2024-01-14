@@ -1,7 +1,10 @@
 using com.logali as logali from '../db/schema';
 
 service CatalogServices {
-    entity Header as select from logali.Header {
+    entity Header @(
+        Capabilities.Insertable: true,
+        Capabilities.Updatable: true
+    ) as select from logali.Header {
         ID,
         Email @mandatory,
         FirstName,

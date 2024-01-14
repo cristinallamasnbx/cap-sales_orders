@@ -5,7 +5,13 @@ annotate service.Header with {
     LastName    @title: 'Surname';
 }
 
+@odata.draft.enabled
 annotate service.Header with @(
+    Capabilities.Insertable: true,
+    Capabilities.Updatable: true,
+    UI.CreateHidden: false,
+    UI.UpdateHidden: false,
+
     // SemanticKey
     Common.SemanticKey    : [ID],
 
