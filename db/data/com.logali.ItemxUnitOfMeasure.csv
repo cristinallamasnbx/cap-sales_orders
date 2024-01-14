@@ -1,4 +1,4 @@
-ID;Item_ID;UnitOfMeasure_ID
+ID,Item_ID,UnitOfMeasure_ID
 2aeb02fd-8df6-43a3-87e5-1282787fd5a3,95518317-4d73-4050-9372-e8b78ada2dbe,PC
 5427d626-a30f-4f93-ab14-457fcddbbde1,e9d087ea-3bd0-4e0d-bdb3-b865fbf1f628,PK
 a01998bd-1720-409f-926a-cf869153f4cb,4a422dc4-9223-43dd-9708-f7645c9b2f55,PC
