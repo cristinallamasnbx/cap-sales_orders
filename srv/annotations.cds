@@ -3,26 +3,27 @@ using {CatalogServices as service} from './catalog-service.cds';
 annotate service.Header with {
     OrderStatus @title: 'Status';
     LastName    @title: 'Surname';
+    CreatedOn   @title: 'Created on';
+    Email       @title: 'Email';
 }
 
 @odata.draft.enabled
 annotate service.Header with @(
     Capabilities.Insertable: true,
-    Capabilities.Updatable: true,
-    UI.CreateHidden: false,
-    UI.UpdateHidden: false,
-
+    Capabilities.Updatable : true,
+    UI.CreateHidden        : false,
+    UI.UpdateHidden        : false,
     // SemanticKey
-    Common.SemanticKey    : [ID],
+    Common.SemanticKey     : [ID],
 
     // Filters
-    UI.SelectionFields    : [
+    UI.SelectionFields     : [
         Email,
         LastName
     ],
 
     // Header
-    UI.HeaderInfo         : {
+    UI.HeaderInfo          : {
         $Type         : '',
         TypeName      : 'Sales Order',
         TypeNamePlural: 'Sales Orders',
@@ -32,20 +33,21 @@ annotate service.Header with @(
         },
         Description   : {
             $Type: 'UI.DataField',
-            Value: {$edmJson: {
+            /*Value: {$edmJson: {
                 $Apply   : [
                     {Path: 'FirstName'},
                     ' ',
                     {Path: 'LastName'}
                 ],
                 $Function: 'odata.concat'
-            }}
+            }}*/
+            Value: CreatedOn
         },
         ImageUrl      : ImageUrl
     },
 
     // Table sort order
-    UI.PresentationVariant: {
+    UI.PresentationVariant : {
         SortOrder     : [
                          //Default sort order
                         {Property: CreatedOn}, ],
@@ -53,7 +55,7 @@ annotate service.Header with @(
     },
 
     // Table
-    UI.LineItem           : [
+    UI.LineItem            : [
         {
             $Type: 'UI.DataField',
             Value: CreatedOn,
@@ -90,7 +92,7 @@ annotate service.Header with @(
     ],
 
     // Facets
-    UI.FieldGroup #GroupA : {
+    UI.FieldGroup #GroupA  : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -107,10 +109,15 @@ annotate service.Header with @(
                 $Type: 'UI.DataField',
                 Value: Email,
                 Label: 'Email'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: ImageUrl,
+                Label: 'Company Logo'
             }
         ]
     },
-    UI.FieldGroup #GroupB : {
+    UI.FieldGroup #GroupB  : {
         $Type: 'UI.FieldGroupType',
         Data : [
             {
@@ -140,7 +147,7 @@ annotate service.Header with @(
             }
         ]
     },
-    UI.Facets             : [
+    UI.Facets              : [
         /*{
             $Type : 'UI.CollectionFacet',
             Facets: [{
@@ -201,11 +208,11 @@ annotate service.HeaderxItem with @(
             $Type: 'UI.DataField',
             Value: Item.Quantity,
             Label: 'Quantity'
-        } ,
+        },
         {
-             $Type: 'UI.DataField',
-             Value: Item.ToUnitOfMeasure.UnitOfMeasure.Description,
-             Label: 'Unit'
+            $Type: 'UI.DataField',
+            Value: Item.ToUnitOfMeasure.UnitOfMeasure.Description,
+            Label: 'Unit'
         }
     ]
 );

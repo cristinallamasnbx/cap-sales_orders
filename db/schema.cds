@@ -6,11 +6,11 @@ using {
 } from '@sap/cds/common';
 
 entity Header : cuid, managed {
-    key Email        : String(36);
+        Email        : String(36);
         FirstName    : String(30);
         LastName     : String(30);
         Country      : String(30);
-        CreatedOn    : Date;
+        CreatedOn    : Date default $now;
         DeliveryDate : DateTime;
         OrderStatus  : Integer enum {
             received   = 1;

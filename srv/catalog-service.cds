@@ -7,12 +7,12 @@ service CatalogServices {
     ) as select from logali.Header {
         ID,
         Email @mandatory,
-        FirstName,
-        LastName,
-        Country,
-        CreatedOn,
-        DeliveryDate,
-        OrderStatus,
+        FirstName @mandatory,
+        LastName @mandatory,
+        Country @mandatory,
+        CreatedOn @mandatory,
+        DeliveryDate @mandatory,
+        OrderStatus @mandatory,
         ImageUrl,
         ToItems
     };
