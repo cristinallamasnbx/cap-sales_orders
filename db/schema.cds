@@ -10,7 +10,7 @@ entity Header : cuid, managed {
         FirstName    : String(30);
         LastName     : String(30);
         Country      : String(30);
-        CreatedOn    : Date default $now;
+        CreatedOn    : Date;
         DeliveryDate : DateTime;
         OrderStatus  : Integer enum {
             received   = 1;

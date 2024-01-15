@@ -12,7 +12,7 @@ module.exports = function (srv) {
             .transaction(req)
             .run(
                 INSERT.into("com.logali.Header").entries({
-                    Id: req.data.Id,
+                    ID: req.data.ID,
                     Email: req.data.Email,
                     FirstName: req.data.FirstName,
                     LastName: req.data.LastName,
@@ -47,16 +47,18 @@ module.exports = function (srv) {
         let returnData = await cds
             .transaction(req)
             .run([
-                UPDATE("com.logali.Header", req.data.Id).set({
+                console.log("req.data: ", req.data),
+                UPDATE("com.logali.Header").set({
                     Email: req.data.Email,
                     FirstName: req.data.FirstName,
                     LastName: req.data.LastName,
                     Country: req.data.Country,
                     DeliveryDate: req.data.DeliveryDate,
                     OrderStatus: req.data.OrderStatus
-                }),
+                }).where({ID:req.data.ID}),
             ])
             .then((resolve, reject) => {
+                console.log("Test ", resolve[0]);
                 console.log("Resolve: ", resolve);
                 console.log("Reject: ", reject);
 
@@ -79,7 +81,7 @@ module.exports = function (srv) {
             .transaction(req)
             .run(
                 DELETE.from("com.logali.Header").where({
-                    Id: req.data.Id
+                    ID: req.data.ID
                 })
             )
             .then((resolve, reject) => {
