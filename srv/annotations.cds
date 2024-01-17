@@ -174,50 +174,8 @@ annotate service.Header with @(
     ]
 );
 
-annotate service.HeaderxItem with @(
-    UI.PresentationVariant: {
-        SortOrder     : [ //Default sort order
-        {
-            Property  : Item.Price,
-            Descending: true,
-        }, ],
-        Visualizations: ['@UI.LineItem'],
-    },
-    UI.HeaderInfo         : {
-        $Type         : '',
-        TypeName      : 'Item',
-        TypeNamePlural: 'Items',
-    },
-    UI.LineItem           : [
-        {
-            $Type: 'UI.DataField',
-            Value: Item.Name,
-            Label: 'Name'
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: Item.Description,
-            Label: 'Description'
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: Item.Price,
-            Label: 'Price'
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: Item.Quantity,
-            Label: 'Quantity'
-        },
-        {
-            $Type: 'UI.DataField',
-            Value: Item.ToUnitOfMeasure.UnitOfMeasure.Description,
-            Label: 'Unit'
-        }
-    ]
-);
-
 annotate service.Item with @(
+    // Table sort order
     UI.PresentationVariant: {
         SortOrder     : [ //Default sort order
         {
@@ -226,32 +184,114 @@ annotate service.Item with @(
         }, ],
         Visualizations: ['@UI.LineItem'],
     },
+
+    // Header
     UI.HeaderInfo         : {
         $Type         : '',
         TypeName      : 'Item',
         TypeNamePlural: 'Items',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: Name,
+            Label: 'Name'
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: Description,
+            Label: 'Description'
+        }
     },
+
+    // Table
     UI.LineItem           : [
         {
             $Type: 'UI.DataField',
-            Value: Name
+            Value: Name,
+            Label: 'Name'
         },
         {
             $Type: 'UI.DataField',
-            Value: Description
+            Value: Description,
+            Label: 'Description'
         },
         {
             $Type: 'UI.DataField',
-            Value: Price
+            Value: Price,
+            Label: 'Price'
         },
         {
             $Type: 'UI.DataField',
-            Value: Quantity
+            Value: Quantity,
+            Label: 'Quantity'
         },
         {
             $Type: 'UI.DataField',
-            Value: ToUnitOfMeasure.UnitOfMeasure.Description,
+            Value: ToUnitOfMeasure.Description,
             Label: 'Unit'
+        }
+    ],
+
+    // Facets
+    UI.FieldGroup #GroupA : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: ReleaseDate,
+                Label: 'Release date'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: DiscontinuedDate,
+                Label: 'Discontinued date'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Price,
+                Label: 'Price'
+            }
+        ]
+    },
+    UI.FieldGroup #GroupB : {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type: 'UI.DataField',
+                Value: Height,
+                Label: 'Height'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Width,
+                Label: 'Width'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Depth,
+                Label: 'Depth'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: Quantity,
+                Label: 'Quantity'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: ToUnitOfMeasure_ID,
+                Label: 'Unit of measure'
+            }
+        ]
+    },
+    UI.Facets             : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Product information',
+            Target: ![@UI.FieldGroup#GroupA]
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Technical information',
+            Target: ![@UI.FieldGroup#GroupB]
         }
     ]
 );

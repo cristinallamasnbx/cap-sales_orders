@@ -17,39 +17,27 @@ service CatalogServices {
         ToItems
     };
 
-    @readonly
-    entity HeaderxItem as select from logali.HeaderxItem {
+    entity Item @(
+        Capabilities.Insertable: true,
+        Capabilities.Updatable: true
+    ) as select from logali.Item {
         ID,
-        Header,
-        Item
-    };
-
-    @readonly
-    entity Item as select from logali.Item {
-        ID,
-        Name,
+        Name @mandatory,
         Description,
         ReleaseDate,
         DiscontinuedDate,
-        Price,
-        Height,
-        Width,
-        Depth,
-        Quantity,
-        ToUnitOfMeasure,
-        ToHeader
+        Price @mandatory,
+        Height @mandatory,
+        Width @mandatory,
+        Depth @mandatory,
+        Quantity @mandatory,
+        ToUnitOfMeasure @mandatory,
+        Header
     };
 
     @readonly
     entity UnitOfMeasure as select from logali.UnitOfMeasure {
         ID,
         Description
-    }
-
-    @readonly
-    entity ItemxUnitOfMeasure as select from logali.ItemxUnitOfMeasure {
-        ID,
-        Item,
-        UnitOfMeasure
     }
 }

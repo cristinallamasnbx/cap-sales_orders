@@ -20,7 +20,7 @@ entity Header : cuid, managed {
             canceled   = -1;
         };
         ImageUrl     : String;
-        ToItems      : Association to many HeaderxItem
+        ToItems      : Composition of many Item
                            on ToItems.Header = $self;
 }
 
@@ -34,23 +34,11 @@ entity Item : cuid, managed {
     Width            : Decimal(13, 3);
     Depth            : Decimal(12, 2);
     Quantity         : Decimal(16, 2);
-    ToUnitOfMeasure  : Association to ItemxUnitOfMeasure
-                           on ToUnitOfMeasure.Item = $self;
-    ToHeader         : Association to many HeaderxItem
-                           on ToHeader.Item = $self;
+    Header           : Association to Header;
+    ToUnitOfMeasure  : Association to UnitOfMeasure;
 }
 
 entity UnitOfMeasure {
     key ID          : String(2);
         Description : String;
-}
-
-entity HeaderxItem : cuid {
-    Header : Association to Header;
-    Item   : Association to Item;
-}
-
-entity ItemxUnitOfMeasure: cuid {
-    Item          : Association to Item;
-    UnitOfMeasure : Association to UnitOfMeasure;
 }
